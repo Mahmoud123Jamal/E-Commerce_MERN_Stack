@@ -1,9 +1,25 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import RootLayout from "./layouts/RootLayout";
+import ErrorPage from "./pages/ErrorPage";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
+    ],
+  },
+]);
 function App() {
-  return (
-    <>
-      <h1 className="p-4 text-green-500">Test</h1>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
