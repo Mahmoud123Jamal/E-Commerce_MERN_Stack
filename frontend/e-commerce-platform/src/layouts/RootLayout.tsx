@@ -6,14 +6,14 @@ import { Menu, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 
 import { logout } from "../features/auth/authSlice";
+import { selectIsAuth } from "../features/auth/authSelectors";
 
 const RootLayout = () => {
   const [open, setOpen] = useState(false);
 
   const dispatch = useAppDispatch();
 
-  const { isAuth } = useAppSelector((state) => state.auth);
-
+  const isAuth = useAppSelector(selectIsAuth);
   const handleLogout = () => {
     dispatch(logout());
   };
