@@ -1,18 +1,37 @@
+import { Link } from "react-router-dom";
+
 const ErrorPage = () => {
   return (
-    <section class="bg-white dark:bg-gray-900 flex items-center justify-center h-screen">
-      <div class="mx-auto max-w-7xl px-4 py-8 lg:px-6 lg:py-16">
-        <div class="mx-auto max-w-screen-sm text-center">
-          <h1 class="dark:text-primary-500 mb-4 text-7xl font-extrabold tracking-tight text-blue-600 lg:text-9xl">
-            500
-          </h1>
-          <p class="mb-4 text-3xl font-bold tracking-tight text-gray-900 md:text-4xl dark:text-white">
-            Internal Server Error.
-          </p>
-          <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
-            Sorry something went wrong.
-          </p>
-        </div>
+    <section className="bg-[#f3f3f3] flex items-center justify-center min-h-screen px-4">
+      <div className="w-full max-w-3xl bg-white rounded-3xl shadow-2xl p-8 sm:p-12 text-center border border-gray-200">
+        <h1 className="mb-4 text-7xl sm:text-8xl lg:text-9xl font-extrabold tracking-tight text-[#ff9900]">
+          500
+        </h1>
+
+        <p className="mb-4 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#131921]">
+          حدث خطأ في السيرفر
+        </p>
+
+        <p className="mb-8 text-base sm:text-lg text-gray-600">
+          عذرًا، حدث خطأ غير متوقع. حاول مرة أخرى لاحقًا.
+        </p>
+
+        <Link
+          to="/"
+          className="
+            inline-block
+            px-6 py-3
+            text-white
+            font-semibold
+            bg-[#ff9900]
+            rounded-xl
+            transition
+            hover:bg-orange-500
+            active:scale-95
+          "
+        >
+          العودة للرئيسية
+        </Link>
       </div>
     </section>
   );
