@@ -6,23 +6,29 @@ import { generateToken } from "../utils/JWT";
 
 export const registerUser = catchAsync(async (req: Request, res: Response) => {
   const { name, email, password, role = "user" } = req.body;
+
+  // 1. Validate input
   if (!name || !email || !password) {
     return res.status(400).json({
       status: "fail",
-      message: "Name, email and password are required",
+      data: { message: "Name, email and password are required" },
     });
   }
+
+  // 2. Check existing user
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    return res
-      .status(409)
-      .json({ status: "fail", data: { message: "User already exists" } });
+    return res.status(409).json({
+      status: "fail",
+      data: { message: "User already exists" },
+    });
   }
-  // Hash password
+
+  // 3. Hash password
   const hashedPassword = await hashPassword(password);
 
-  // Create user
+  // 4. Create user
   const newUser = await User.create({
     name,
     email,
@@ -30,48 +36,89 @@ export const registerUser = catchAsync(async (req: Request, res: Response) => {
     role,
   });
 
-  //Generate JWT
+  // 5. Generate token
   const token = generateToken(
     newUser.email,
     newUser._id as string,
     newUser.role,
   );
-  res.status(201).json({ status: "success", data: { user: newUser, token } });
+
+  // 6. Remove password safely
+  const userObj = newUser.toObject();
+  const { password: _, ...userWithoutPassword } = userObj;
+
+  // 7. Response
+  return res.status(201).json({
+    status: "success",
+    data: {
+      user: userWithoutPassword,
+      token,
+    },
+  });
 });
 
 export const loginUser = catchAsync(async (req: Request, res: Response) => {
-  const { email, password, role = "user" } = req.body;
+  const { email, password: inputPassword } = req.body;
 
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ status: "fail", data: { message: "All fields are required" } });
+  // 1. Validate input
+  if (!email || !inputPassword) {
+    return res.status(400).json({
+      status: "fail",
+      data: { message: "Email and password are required" },
+    });
   }
+
+  // 2. Find user + include password
   const user = await User.findOne({ email }).select("+password");
+
   if (!user) {
-    return res
-      .status(401)
-      .json({ status: "fail", data: { message: "Invalid credentials" } });
+    return res.status(401).json({
+      status: "fail",
+      data: { message: "Invalid credentials" },
+    });
   }
-  // Verify password
-  const isPasswordValid = await comparePassword(password, user.password);
+
+  // 3. Check password
+  const isPasswordValid = await comparePassword(inputPassword, user.password);
+
   if (!isPasswordValid) {
-    return res
-      .status(401)
-      .json({ status: "fail", data: { message: "Invalid credentials" } });
+    return res.status(401).json({
+      status: "fail",
+      data: { message: "Invalid credentials" },
+    });
   }
+
+  // 4. Generate token
   const token = generateToken(user.email, user._id as string, user.role);
 
-  return res.status(200).json({ status: "success", data: { user, token } });
+  // 5. Remove password safely
+  const userObj = user.toObject();
+  const { password: _, ...userWithoutPassword } = userObj;
+
+  // 6. Response
+  return res.status(200).json({
+    status: "success",
+    data: {
+      user: userWithoutPassword,
+      token,
+    },
+  });
 });
 
 export const getUserInfo = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id;
-  const user = await User.findById(userId);
+
+  const user = await User.findById(userId).select("-password");
+
   if (!user) {
-    return res
-      .status(404)
-      .json({ status: "fail", data: { message: "User not found" } });
+    return res.status(404).json({
+      status: "fail",
+      data: { message: "User not found" },
+    });
   }
-  return res.status(200).json({ status: "success", data: { user } });
+
+  return res.status(200).json({
+    status: "success",
+    data: { user },
+  });
 });
