@@ -7,7 +7,6 @@ function AuthWrapper({ children }: authWrapperType) {
       className="
         flex items-center justify-center
         min-h-screen sm:min-h-screen
-        bg-gray-100
         overflow-hidden
         px-4 sm:px-6 lg:px-8
         py-0 sm:py-8
