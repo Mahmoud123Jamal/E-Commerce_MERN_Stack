@@ -24,10 +24,12 @@
   "registerSuccess": "Account created successfully",
   "registerError": "Registration failed ",
 
-  "errors": {
-    "invalidEmail": "Invalid email address",
+ 
+  "validation": {
+    "email": "Invalid email address",
     "passwordMin": "Password must be at least 8 characters",
-    "passwordPattern": "Must contain uppercase, lowercase, number and special character",
+    "passwordRegex": "Password must contain uppercase, lowercase, number and special character",
     "nameMin": "Name must be at least 3 characters"
-  }
+  
+}
 }
