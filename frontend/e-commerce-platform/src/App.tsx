@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { ToastContainer } from "react-toastify";
+import { useAppSelector } from "./hooks/reduxHooks";
+import { selectTheme } from "./features/theme/themeSelectors";
 
 const router = createBrowserRouter([
   {
@@ -19,8 +21,9 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
+  const theme = useAppSelector(selectTheme);
   return (
-    <>
+    <div data-theme={theme}>
       <RouterProvider router={router} />
       <ToastContainer
         position="top-right"
@@ -34,7 +37,7 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-    </>
+    </div>
   );
 }
 
