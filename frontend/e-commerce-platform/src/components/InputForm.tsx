@@ -3,8 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 
 import type { formPropsType, FormVariant } from "../types/FormPropsType";
-
-import { loginSchema, registerSchema } from "../validations/formSchema";
+import {
+  createLoginSchema,
+  createRegisterSchema,
+} from "../validations/formSchema";
 
 function InputForm<T extends FormVariant>({
   showName,
@@ -14,7 +16,7 @@ function InputForm<T extends FormVariant>({
 }: formPropsType<T>) {
   const { t } = useTranslation();
 
-  const schema = showName ? registerSchema : loginSchema;
+  const schema = showName ? createRegisterSchema(t) : createLoginSchema(t);
 
   const {
     register,
