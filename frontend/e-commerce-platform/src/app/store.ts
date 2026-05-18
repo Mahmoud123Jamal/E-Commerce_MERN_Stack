@@ -2,38 +2,24 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import { persistStore, persistReducer } from "redux-persist";
 
-import authReducer from "../features/auth/authSlice";
-import themeReducer from "../features/theme/themeSlice";
-
 import storage from "./storage";
 
-// =======================
-// Root Reducer
-// =======================
+import authReducer from "../features/auth/authSlice";
+import themeReducer from "../features/theme/themeSlice";
+import langReducer from "../features/lang/langSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   theme: themeReducer,
+  lang: langReducer,
 });
-
-// =======================
-// Persist Config
-// =======================
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
-// =======================
-// Persisted Reducer
-// =======================
-
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-// =======================
-// Store
-// =======================
 
 export const store = configureStore({
   reducer: persistedReducer,
@@ -44,15 +30,7 @@ export const store = configureStore({
     }),
 });
 
-// =======================
-// Persistor
-// =======================
-
 export const persistor = persistStore(store);
-
-// =======================
-// Types
-// =======================
 
 export type RootState = ReturnType<typeof store.getState>;
 
