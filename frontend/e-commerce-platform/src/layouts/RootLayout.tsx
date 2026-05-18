@@ -3,12 +3,15 @@ import { useState } from "react";
 
 import { Menu, X } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 
 import { logout } from "../features/auth/authSlice";
 import { selectIsAuth } from "../features/auth/authSelectors";
 
 import ThemeToggle from "../components/ThemeToggle";
+import LangToggle from "../components/LangToggle";
 
 const RootLayout = () => {
   const [open, setOpen] = useState(false);
@@ -17,11 +20,18 @@ const RootLayout = () => {
 
   const isAuth = useAppSelector(selectIsAuth);
 
+  const { t } = useTranslation();
+
   const handleLogout = () => {
     dispatch(logout());
   };
 
-  const navItems = [{ to: "/", label: "الرئيسية" }];
+  const navItems = [
+    {
+      to: "/",
+      label: t("home"),
+    },
+  ];
 
   return (
     <div
@@ -68,10 +78,12 @@ const RootLayout = () => {
                 transition
               "
             >
-              متجر أم جي
+              {t("storeName")}
             </Link>
 
             <ThemeToggle />
+
+            <LangToggle />
           </div>
 
           {/* Desktop Nav */}
@@ -109,7 +121,7 @@ const RootLayout = () => {
                   btn-sm
                 "
               >
-                تسجيل الخروج
+                {t("logout")}
               </button>
             ) : (
               <>
@@ -131,7 +143,7 @@ const RootLayout = () => {
                       `
                   }
                 >
-                  تسجيل الدخول
+                  {t("login")}
                 </NavLink>
 
                 <NavLink
@@ -152,7 +164,7 @@ const RootLayout = () => {
                       `
                   }
                 >
-                  تسجيل حساب
+                  {t("register")}
                 </NavLink>
               </>
             )}
@@ -212,7 +224,7 @@ const RootLayout = () => {
                   btn-sm
                 "
               >
-                تسجيل الخروج
+                {t("logout")}
               </button>
             ) : (
               <>
@@ -225,7 +237,7 @@ const RootLayout = () => {
                     transition
                   "
                 >
-                  تسجيل الدخول
+                  {t("login")}
                 </NavLink>
 
                 <NavLink
@@ -237,7 +249,7 @@ const RootLayout = () => {
                     transition
                   "
                 >
-                  تسجيل حساب
+                  {t("register")}
                 </NavLink>
               </>
             )}
@@ -260,7 +272,9 @@ const RootLayout = () => {
           py-4
         "
       >
-        <p className="text-sm  ">© {new Date().getFullYear()} متجر أم جي</p>
+        <p className="text-sm">
+          © {new Date().getFullYear()} {t("storeName")}
+        </p>
       </footer>
     </div>
   );
