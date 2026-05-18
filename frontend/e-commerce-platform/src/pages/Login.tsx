@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 
 function Login() {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const onSubmit = async (data: LoginFormData) => {
@@ -39,6 +39,7 @@ function Login() {
   return (
     <AuthWrapper>
       <InputForm<LoginFormData>
+        key={i18n.language}
         headerText={t("header-title-login")}
         buttonText={t("login")}
         showName={false}

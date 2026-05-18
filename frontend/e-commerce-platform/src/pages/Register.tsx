@@ -18,7 +18,7 @@ function Register() {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const onSubmit = async (data: RegisterFormData) => {
     try {
       const res = await registerUser({
@@ -45,6 +45,7 @@ function Register() {
   return (
     <AuthWrapper>
       <InputForm<RegisterFormData>
+        key={i18n.language}
         headerText={t("header-title-register")}
         buttonText={t("register")}
         showName={true}
