@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "react-i18next";
 
 import type { formPropsType, FormVariant } from "../types/FormPropsType";
 
@@ -11,6 +12,8 @@ function InputForm<T extends FormVariant>({
   buttonText,
   onSubmit,
 }: formPropsType<T>) {
+  const { t } = useTranslation();
+
   const schema = showName ? registerSchema : loginSchema;
 
   const {
@@ -42,39 +45,25 @@ function InputForm<T extends FormVariant>({
           duration-300
         "
       >
-        {/* Header */}
         {headerText && (
-          <h2
-            className="
-              text-3xl
-              font-bold
-              text-center
-              text-base-content
-            "
-          >
+          <h2 className="text-3xl font-bold text-center text-base-content">
             {headerText}
           </h2>
         )}
 
-        {/* Name */}
         {showName && (
           <div className="flex flex-col">
             <label
               htmlFor="name"
-              className="
-                mb-2
-                text-sm
-                font-semibold
-                text-base-content
-              "
+              className="mb-2 text-sm font-semibold text-base-content"
             >
-              الاسم
+              {t("name")}
             </label>
 
             <input
               type="text"
               id="name"
-              placeholder="اكتب اسمك"
+              placeholder={t("namePlaceholder")}
               {...register("name")}
               className="
                 px-4
@@ -99,24 +88,18 @@ function InputForm<T extends FormVariant>({
           </div>
         )}
 
-        {/* Email */}
         <div className="flex flex-col">
           <label
             htmlFor="email"
-            className="
-              mb-2
-              text-sm
-              font-semibold
-              text-base-content
-            "
+            className="mb-2 text-sm font-semibold text-base-content"
           >
-            البريد الإلكتروني
+            {t("email")}
           </label>
 
           <input
             type="email"
             id="email"
-            placeholder="example@gmail.com"
+            placeholder={t("emailPlaceholder")}
             {...register("email")}
             className="
               px-4
@@ -140,24 +123,18 @@ function InputForm<T extends FormVariant>({
           )}
         </div>
 
-        {/* Password */}
         <div className="flex flex-col">
           <label
             htmlFor="password"
-            className="
-              mb-2
-              text-sm
-              font-semibold
-              text-base-content
-            "
+            className="mb-2 text-sm font-semibold text-base-content"
           >
-            كلمة المرور
+            {t("password")}
           </label>
 
           <input
             type="password"
             id="password"
-            placeholder="********"
+            placeholder={t("passwordPlaceholder")}
             {...register("password")}
             className="
               px-4
@@ -181,7 +158,6 @@ function InputForm<T extends FormVariant>({
           )}
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
@@ -197,7 +173,7 @@ function InputForm<T extends FormVariant>({
           {isSubmitting ? (
             <>
               <span className="loading loading-spinner loading-sm"></span>
-              جاري الإرسال...
+              {t("submitLoading")}
             </>
           ) : (
             buttonText
