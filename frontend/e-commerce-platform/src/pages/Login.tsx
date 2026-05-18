@@ -12,10 +12,11 @@ import { useAppDispatch } from "../hooks/reduxHooks";
 import type { LoginFormData } from "../types/FormDataType";
 
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function Login() {
   const dispatch = useAppDispatch();
-
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const onSubmit = async (data: LoginFormData) => {
@@ -27,19 +28,19 @@ function Login() {
 
       dispatch(login({ user: res.data.user, token: res.data.token }));
 
-      toast.success("تم تسجيل الدخول بنجاح!");
+      toast.success(t("loginSuccess"));
 
       navigate("/");
     } catch (error) {
-      toast.error("حدث خطأ أثناء تسجيل الدخول.");
+      toast.error(t("loginError"));
     }
   };
 
   return (
     <AuthWrapper>
       <InputForm<LoginFormData>
-        headerText="تسجيل الدخول"
-        buttonText="تسجيل الدخول"
+        headerText={t("header-title-login")}
+        buttonText={t("login")}
         showName={false}
         onSubmit={onSubmit}
       />

@@ -12,12 +12,13 @@ import { useAppDispatch } from "../hooks/reduxHooks";
 import type { RegisterFormData } from "../types/FormDataType";
 
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function Register() {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const onSubmit = async (data: RegisterFormData) => {
     try {
       const res = await registerUser({
@@ -33,19 +34,19 @@ function Register() {
         }),
       );
 
-      toast.success("تم إنشاء الحساب بنجاح!");
+      toast.success(t("registerSuccess"));
 
       navigate("/");
     } catch (error) {
-      toast.error("حدث خطأ أثناء إنشاء الحساب.");
+      toast.error(t("registerError"));
     }
   };
 
   return (
     <AuthWrapper>
       <InputForm<RegisterFormData>
-        headerText="تسجيل حساب جديد"
-        buttonText="تسجيل حساب جديد"
+        headerText={t("header-title-register")}
+        buttonText={t("register")}
         showName={true}
         onSubmit={onSubmit}
       />
