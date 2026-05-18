@@ -3,6 +3,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 
 import authReducer from "../features/auth/authSlice";
+import themeReducer from "../features/theme/themeSlice";
 
 import storage from "./storage";
 
@@ -12,6 +13,7 @@ import storage from "./storage";
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  theme: themeReducer,
 });
 
 // =======================
