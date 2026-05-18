@@ -28,20 +28,30 @@ function InputForm<T extends FormVariant>({
         className="
           w-full
           max-w-2xl
-          bg-white
+          bg-base-100
+          text-base-content
           rounded-2xl
           shadow-2xl
           border
-          border-gray-200
+          border-base-300
           p-6
           sm:p-8
           md:p-10
           space-y-6
+          transition-colors
+          duration-300
         "
       >
         {/* Header */}
         {headerText && (
-          <h2 className="text-3xl font-bold text-center text-[#131921]">
+          <h2
+            className="
+              text-3xl
+              font-bold
+              text-center
+              text-base-content
+            "
+          >
             {headerText}
           </h2>
         )}
@@ -51,7 +61,12 @@ function InputForm<T extends FormVariant>({
           <div className="flex flex-col">
             <label
               htmlFor="name"
-              className="mb-2 text-sm font-semibold text-[#131921]"
+              className="
+                mb-2
+                text-sm
+                font-semibold
+                text-base-content
+              "
             >
               الاسم
             </label>
@@ -65,18 +80,21 @@ function InputForm<T extends FormVariant>({
                 px-4
                 py-3
                 border
-                border-gray-300
+                border-base-300
+                bg-base-200
+                text-base-content
                 rounded-xl
                 outline-none
-                transition
+                transition-all
+                duration-200
                 focus:ring-2
-                focus:ring-[#ff9900]
-                focus:border-[#ff9900]
+                focus:ring-primary
+                focus:border-primary
               "
             />
 
             {"name" in errors && errors.name && (
-              <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
+              <p className="mt-1 text-sm text-error">{errors.name.message}</p>
             )}
           </div>
         )}
@@ -85,7 +103,12 @@ function InputForm<T extends FormVariant>({
         <div className="flex flex-col">
           <label
             htmlFor="email"
-            className="mb-2 text-sm font-semibold text-[#131921]"
+            className="
+              mb-2
+              text-sm
+              font-semibold
+              text-base-content
+            "
           >
             البريد الإلكتروني
           </label>
@@ -99,18 +122,21 @@ function InputForm<T extends FormVariant>({
               px-4
               py-3
               border
-              border-gray-300
+              border-base-300
+              bg-base-200
+              text-base-content
               rounded-xl
               outline-none
-              transition
+              transition-all
+              duration-200
               focus:ring-2
-              focus:ring-[#ff9900]
-              focus:border-[#ff9900]
+              focus:ring-primary
+              focus:border-primary
             "
           />
 
           {errors.email && (
-            <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+            <p className="mt-1 text-sm text-error">{errors.email.message}</p>
           )}
         </div>
 
@@ -118,7 +144,12 @@ function InputForm<T extends FormVariant>({
         <div className="flex flex-col">
           <label
             htmlFor="password"
-            className="mb-2 text-sm font-semibold text-[#131921]"
+            className="
+              mb-2
+              text-sm
+              font-semibold
+              text-base-content
+            "
           >
             كلمة المرور
           </label>
@@ -132,20 +163,21 @@ function InputForm<T extends FormVariant>({
               px-4
               py-3
               border
-              border-gray-300
+              border-base-300
+              bg-base-200
+              text-base-content
               rounded-xl
               outline-none
-              transition
+              transition-all
+              duration-200
               focus:ring-2
-              focus:ring-[#ff9900]
-              focus:border-[#ff9900]
+              focus:ring-primary
+              focus:border-primary
             "
           />
 
           {errors.password && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.password.message}
-            </p>
+            <p className="mt-1 text-sm text-error">{errors.password.message}</p>
           )}
         </div>
 
@@ -154,39 +186,17 @@ function InputForm<T extends FormVariant>({
           type="submit"
           disabled={isSubmitting}
           className="
+            btn
+            btn-primary
             w-full
-            py-3
-            text-lg
-            font-semibold
-            text-white
-            bg-[#ff9900]
             rounded-xl
-            transition-all
-            duration-200
-            hover:bg-orange-500
-            active:scale-[0.98]
+            text-lg
             disabled:opacity-70
-            disabled:cursor-not-allowed
-            flex
-            items-center
-            justify-center
-            gap-2
-            cursor-pointer
           "
         >
           {isSubmitting ? (
             <>
-              <span
-                className="
-                  w-5
-                  h-5
-                  border-2
-                  border-white
-                  border-t-transparent
-                  rounded-full
-                  animate-spin
-                "
-              />
+              <span className="loading loading-spinner loading-sm"></span>
               جاري الإرسال...
             </>
           ) : (
