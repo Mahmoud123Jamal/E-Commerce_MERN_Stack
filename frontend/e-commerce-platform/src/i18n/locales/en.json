@@ -3,5 +3,31 @@
   "home": "Home",
   "login": "Login",
   "register": "Register",
-  "logout": "Logout"
+  "logout": "Logout",
+
+  "header-title-register": "Create New Account",
+  "header-title-login": "Login to Your Account",
+
+  "name": "Name",
+  "email": "Email",
+  "password": "Password",
+
+  "namePlaceholder": "Enter your name",
+  "emailPlaceholder": "example@gmail.com",
+  "passwordPlaceholder": "********",
+
+  "submitLoading": "Loading...",
+
+  "loginSuccess": "Login successful",
+  "loginError": "Login failed ",
+
+  "registerSuccess": "Account created successfully",
+  "registerError": "Registration failed ",
+
+  "errors": {
+    "invalidEmail": "Invalid email address",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordPattern": "Must contain uppercase, lowercase, number and special character",
+    "nameMin": "Name must be at least 3 characters"
+  }
 }
