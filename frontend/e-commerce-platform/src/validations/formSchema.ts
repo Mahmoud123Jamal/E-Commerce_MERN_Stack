@@ -1,18 +1,21 @@
 import { z } from "zod";
+import type { TFunction } from "i18next";
 
-const baseSchema = z.object({
-  email: z.string().email("البريد الإلكتروني غير صحيح"),
-  password: z
-    .string()
-    .min(8, "كلمة المرور يجب أن تكون 8 أحرف على الأقل")
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
-      "يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم ورمز خاص",
-    ),
-});
+export const createBaseSchema = (t: TFunction) =>
+  z.object({
+    email: z.string().email(t("validation.email")),
+    password: z
+      .string()
+      .min(8, t("validation.passwordMin"))
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+        t("validation.passwordRegex"),
+      ),
+  });
 
-export const loginSchema = baseSchema;
+export const createLoginSchema = (t: TFunction) => createBaseSchema(t);
 
-export const registerSchema = baseSchema.extend({
-  name: z.string().min(3, "الاسم يجب أن يكون 3 حروف على الأقل"),
-});
+export const createRegisterSchema = (t: TFunction) =>
+  createBaseSchema(t).extend({
+    name: z.string().min(3, t("validation.nameMin")),
+  });
