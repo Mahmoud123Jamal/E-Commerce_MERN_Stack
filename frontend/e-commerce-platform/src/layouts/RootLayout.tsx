@@ -8,12 +8,15 @@ import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { logout } from "../features/auth/authSlice";
 import { selectIsAuth } from "../features/auth/authSelectors";
 
+import ThemeToggle from "../components/ThemeToggle";
+
 const RootLayout = () => {
   const [open, setOpen] = useState(false);
 
   const dispatch = useAppDispatch();
 
   const isAuth = useAppSelector(selectIsAuth);
+
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -21,16 +24,57 @@ const RootLayout = () => {
   const navItems = [{ to: "/", label: "الرئيسية" }];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f3f3f3]">
-      <header className="bg-[#131921] shadow-lg">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link
-            to="/"
-            className="text-xl sm:text-2xl font-bold text-[#ff9900] hover:text-orange-400 transition"
-          >
-            متجر أم جي
-          </Link>
+    <div
+      className="
+        min-h-screen
+        flex
+        flex-col
+        bg-base-200
+        text-base-content
+        transition-colors
+        duration-300
+      "
+    >
+      {/* Header */}
+      <header
+        className="
+          bg-base-100
+          shadow-lg
+          border-b
+          border-base-300
+        "
+      >
+        <div
+          className="
+            container
+            mx-auto
+            px-4
+            h-16
+            flex
+            items-center
+            justify-between
+          "
+        >
+          {/* Logo + Theme */}
+          <div className="flex items-center gap-4">
+            <Link
+              to="/"
+              className="
+                text-xl
+                sm:text-2xl
+                font-bold
+                text-primary
+                hover:opacity-80
+                transition
+              "
+            >
+              متجر أم جي
+            </Link>
 
+            <ThemeToggle />
+          </div>
+
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <NavLink
@@ -38,8 +82,18 @@ const RootLayout = () => {
                 to={item.to}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-[#ff9900] font-semibold border-b-2 border-[#ff9900] pb-1"
-                    : "text-white hover:text-[#ff9900] transition"
+                    ? `
+                      text-primary
+                      font-semibold
+                      border-b-2
+                      border-primary
+                      pb-1
+                    `
+                    : `
+                      text-base-content
+                      hover:text-primary
+                      transition
+                    `
                 }
               >
                 {item.label}
@@ -50,13 +104,9 @@ const RootLayout = () => {
               <button
                 onClick={handleLogout}
                 className="
-                  cursor-pointer
-                  bg-[#ff9900]
-                  text-white
-                  px-4 py-2
-                  rounded-lg
-                  hover:bg-orange-500
-                  transition
+                  btn
+                  btn-primary
+                  btn-sm
                 "
               >
                 تسجيل الخروج
@@ -67,8 +117,18 @@ const RootLayout = () => {
                   to="/login"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-[#ff9900] font-semibold border-b-2 border-[#ff9900] pb-1"
-                      : "text-white hover:text-[#ff9900] transition"
+                      ? `
+                        text-primary
+                        font-semibold
+                        border-b-2
+                        border-primary
+                        pb-1
+                      `
+                      : `
+                        text-base-content
+                        hover:text-primary
+                        transition
+                      `
                   }
                 >
                   تسجيل الدخول
@@ -78,8 +138,18 @@ const RootLayout = () => {
                   to="/register"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-[#ff9900] font-semibold border-b-2 border-[#ff9900] pb-1"
-                      : "text-white hover:text-[#ff9900] transition"
+                      ? `
+                        text-primary
+                        font-semibold
+                        border-b-2
+                        border-primary
+                        pb-1
+                      `
+                      : `
+                        text-base-content
+                        hover:text-primary
+                        transition
+                      `
                   }
                 >
                   تسجيل حساب
@@ -88,20 +158,28 @@ const RootLayout = () => {
             )}
           </nav>
 
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-white"
+            className="
+              md:hidden
+              text-base-content
+            "
           >
             {open ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
+        {/* Mobile Nav */}
         {open && (
           <nav
             className="
               md:hidden
-              bg-[#232f3e]
-              flex flex-col
+              bg-base-100
+              border-t
+              border-base-300
+              flex
+              flex-col
               items-center
               gap-4
               py-4
@@ -114,8 +192,8 @@ const RootLayout = () => {
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-[#ff9900] font-semibold"
-                    : "text-white hover:text-[#ff9900] transition"
+                    ? "text-primary font-semibold"
+                    : "text-base-content hover:text-primary transition"
                 }
               >
                 {item.label}
@@ -129,13 +207,9 @@ const RootLayout = () => {
                   setOpen(false);
                 }}
                 className="
-                  cursor-pointer
-                  bg-[#ff9900]
-                  text-white
-                  px-4 py-2
-                  rounded-lg
-                  hover:bg-orange-500
-                  transition
+                  btn
+                  btn-primary
+                  btn-sm
                 "
               >
                 تسجيل الخروج
@@ -145,7 +219,11 @@ const RootLayout = () => {
                 <NavLink
                   to="/login"
                   onClick={() => setOpen(false)}
-                  className="text-white hover:text-[#ff9900]"
+                  className="
+                    text-base-content
+                    hover:text-primary
+                    transition
+                  "
                 >
                   تسجيل الدخول
                 </NavLink>
@@ -153,7 +231,11 @@ const RootLayout = () => {
                 <NavLink
                   to="/register"
                   onClick={() => setOpen(false)}
-                  className="text-white hover:text-[#ff9900]"
+                  className="
+                    text-base-content
+                    hover:text-primary
+                    transition
+                  "
                 >
                   تسجيل حساب
                 </NavLink>
@@ -163,14 +245,22 @@ const RootLayout = () => {
         )}
       </header>
 
+      {/* Pages */}
       <main className="flex-1 container mx-auto w-full p-4">
         <Outlet />
       </main>
 
-      <footer className="bg-[#131921] text-center py-4 text-white">
-        <p className="text-sm sm:text-base">
-          © {new Date().getFullYear()} متجر أم جي
-        </p>
+      {/* Footer */}
+      <footer
+        className="
+          bg-base-100
+          border-t
+          border-base-300
+          text-center
+          py-4
+        "
+      >
+        <p className="text-sm  ">© {new Date().getFullYear()} متجر أم جي</p>
       </footer>
     </div>
   );
