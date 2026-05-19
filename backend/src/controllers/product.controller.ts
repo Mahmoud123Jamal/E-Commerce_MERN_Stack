@@ -27,9 +27,8 @@ export const createProduct = catchAsync(async (req: Request, res: Response) => {
     price: Number(price),
     stock: Number(stock),
     category,
-    imageUrl: files[0].filename,
-    multipleImages: files.map((f) => f.filename),
-
+    imageUrl: `/uploads/products/${files[0].filename}`,
+    multipleImages: files.map((f) => `/uploads/products/${f.filename}`),
     comments: [],
     averageRating: 0,
     reviewsCount: 0,
@@ -92,7 +91,7 @@ export const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const files = req.files as Express.Multer.File[];
 
   if (files?.length) {
-    product.imageUrl = files[0].filename;
+    product.imageUrl = `/uploads/products/${files[0].filename}`;
     product.multipleImages = files.map((f) => f.filename);
   }
 
