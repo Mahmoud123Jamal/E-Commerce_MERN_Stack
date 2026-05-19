@@ -9,9 +9,10 @@ import {
   registerValidator,
 } from "../validators/user.validator";
 import { validationMiddleware } from "../middlewares/validation.middleware";
+import { protect } from "../middlewares/auth.middleware";
 const router = Router();
 router.post("/register", registerValidator, validationMiddleware, registerUser);
 router.post("/login", loginValidator, validationMiddleware, loginUser);
-router.get("/:id", getUserInfo);
+router.get("/:id", protect, getUserInfo);
 
 export default router;
