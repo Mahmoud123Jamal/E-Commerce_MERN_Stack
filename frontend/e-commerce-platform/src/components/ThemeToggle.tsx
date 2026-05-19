@@ -20,9 +20,9 @@ function ThemeToggle() {
         onChange={() => dispatch(toggleTheme())}
       />
 
-      <Sun className="swap-off h-8 w-8 text-yellow-400" />
+      <Sun className="swap-off h-6 w-6 text-yellow-400" />
 
-      <Moon className="swap-on h-8 w-8 text-white" />
+      <Moon className="swap-on h-6 w-6 text-white" />
     </label>
   );
 }
