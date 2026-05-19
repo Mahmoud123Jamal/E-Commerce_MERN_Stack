@@ -1,4 +1,5 @@
 import ProductModel from "../models/product.model";
+import { UserType } from "../types/User.model.type";
 
 export const createProductService = async (
   data: any,
@@ -62,13 +63,21 @@ export const deleteProductService = async (id: string) => {
 
 export const addCommentService = async (
   productId: string,
-  user: any,
+  user: UserType,
   comment: string,
   rating: number,
 ) => {
   const product = await ProductModel.findById(productId);
 
   if (!product) return null;
+  // Anti Spam Review
+  const alreadyReviewed = product.comments.find(
+    (item) => item.user.toString() === user._id.toString(),
+  );
+
+  if (alreadyReviewed) {
+    throw new Error("You already reviewed this product");
+  }
 
   product.comments.push({
     user: user._id,
