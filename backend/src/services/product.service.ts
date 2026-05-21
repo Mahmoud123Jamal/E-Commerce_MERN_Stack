@@ -1,4 +1,5 @@
 import ProductModel from "../models/product.model";
+import { GetProductsParams } from "../types/ProductsParamsType";
 import { UserType } from "../types/User.model.type";
 
 export const createProductService = async (
@@ -23,8 +24,49 @@ export const createProductService = async (
   return product;
 };
 
-export const getAllProductsService = async () => {
-  return await ProductModel.find().sort("-createdAt");
+export const getAllProductsService = async ({
+  page = 1,
+
+  limit = 8,
+
+  search = "",
+
+  category = "",
+}: GetProductsParams) => {
+  const skip = (page - 1) * limit;
+
+  const filter: any = {};
+
+  // SEARCH
+  if (search) {
+    filter.name = {
+      $regex: search,
+
+      $options: "i",
+    };
+  }
+
+  // CATEGORY
+  if (category && category !== "All") {
+    filter.category = category;
+  }
+
+  const products = await ProductModel.find(filter)
+    .sort("-createdAt")
+    .skip(skip)
+    .limit(limit);
+
+  const totalProducts = await ProductModel.countDocuments(filter);
+
+  return {
+    products,
+
+    totalProducts,
+
+    totalPages: Math.ceil(totalProducts / limit),
+
+    currentPage: page,
+  };
 };
 
 export const getProductByIdService = async (id: string) => {
