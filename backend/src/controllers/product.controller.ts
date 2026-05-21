@@ -23,12 +23,36 @@ export const createProduct = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const getAllProducts = catchAsync(async (_req, res: Response) => {
-  const products = await getAllProductsService();
+export const getAllProducts = catchAsync(async (req, res: Response) => {
+  const page = Number(req.query.page) || 1;
+
+  const limit = Number(req.query.limit) || 8;
+
+  const search = (req.query.search as string) || "";
+
+  const category = (req.query.category as string) || "";
+
+  const result = await getAllProductsService({
+    page,
+    limit,
+    search,
+    category,
+  });
 
   res.status(200).json({
     status: "success",
-    data: { products },
+
+    results: result.products.length,
+
+    totalProducts: result.totalProducts,
+
+    totalPages: result.totalPages,
+
+    currentPage: result.currentPage,
+
+    data: {
+      products: result.products,
+    },
   });
 });
 
