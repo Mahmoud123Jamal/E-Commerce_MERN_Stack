@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 import type { IComment, IProduct } from "../types/product.model.type";
+import { PRODUCT_CATEGORIES } from "../types/product.model.type";
 
 const commentSchema = new Schema<IComment>(
   {
@@ -58,6 +59,7 @@ const productSchema = new Schema<IProduct>(
     category: {
       type: String,
       required: true,
+      enum: PRODUCT_CATEGORIES,
     },
 
     imageUrl: {
