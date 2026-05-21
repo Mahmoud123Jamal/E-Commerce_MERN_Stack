@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import { PRODUCT_CATEGORIES } from "../types/product.model.type";
 
 export const createProductValidator = [
   body("name")
@@ -25,7 +26,11 @@ export const createProductValidator = [
     .isNumeric()
     .withMessage("Stock must be number"),
 
-  body("category").notEmpty().withMessage("Category is required"),
+  body("category")
+    .notEmpty()
+    .withMessage("Category is required")
+    .isIn(PRODUCT_CATEGORIES)
+    .withMessage("Invalid category specified"),
 ];
 
 export const updateProductValidator = [
@@ -40,7 +45,10 @@ export const updateProductValidator = [
 
   body("stock").optional().isNumeric().withMessage("Stock must be number"),
 
-  body("category").optional().notEmpty().withMessage("Category required"),
+  body("category")
+    .optional()
+    .isIn(PRODUCT_CATEGORIES)
+    .withMessage("Invalid category specified"),
 ];
 
 export const addCommentValidator = [
