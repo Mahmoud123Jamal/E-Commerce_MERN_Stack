@@ -23,12 +23,30 @@
 
   "registerSuccess": "تم إنشاء الحساب بنجاح ",
   "registerError": "حدث خطأ أثناء إنشاء الحساب ",
-  
+
   "validation": {
     "email": "البريد الإلكتروني غير صحيح",
     "passwordMin": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
     "passwordRegex": "يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم ورمز خاص",
     "nameMin": "الاسم يجب أن يكون 3 حروف على الأقل"
-  
-}
+  },
+  "products": "جميع المنتجات",
+  "searchProducts": "ابحث عن المنتجات...",
+  "all": "الكل",
+  "noProductsFound": "لا توجد منتجات",
+
+  "Electronics": "إلكترونيات",
+  "Fashion": "أزياء",
+  "Home & Kitchen": "المنزل والمطبخ",
+  "Beauty & Personal Care": "الجمال والعناية الشخصية",
+  "Sports & Outdoors": "الرياضة والأنشطة",
+  "Toys & Games": "الألعاب",
+  "Books & Stationery": "الكتب والأدوات",
+  "Automotive": "السيارات",
+  "viewDetails": "عرض التفاصيل",
+  "inStock": "متوفر",
+  "outOfStock": "غير متوفر",
+  "addToCart": "أضف للسلة",
+  "loginRequired": "تسجيل الدخول مطلوب",
+  "pleaseLoginToViewProducts": "يرجى تسجيل الدخول أولاً لعرض المنتجات ومتابعة التسوق."
 }

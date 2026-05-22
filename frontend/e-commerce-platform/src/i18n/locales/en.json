@@ -24,12 +24,30 @@
   "registerSuccess": "Account created successfully",
   "registerError": "Registration failed ",
 
- 
   "validation": {
     "email": "Invalid email address",
     "passwordMin": "Password must be at least 8 characters",
     "passwordRegex": "Password must contain uppercase, lowercase, number and special character",
     "nameMin": "Name must be at least 3 characters"
-  
-}
+  },
+  "products": "Explore Products",
+
+  "searchProducts": "Search products...",
+  "all": "All",
+  "noProductsFound": "No Products Found",
+
+  "Electronics": "Electronics",
+  "Fashion": "Fashion",
+  "Home & Kitchen": "Home & Kitchen",
+  "Beauty & Personal Care": "Beauty & Personal Care",
+  "Sports & Outdoors": "Sports & Outdoors",
+  "Toys & Games": "Toys & Games",
+  "Books & Stationery": "Books & Stationery",
+  "Automotive": "Automotive",
+  "viewDetails": "View Details",
+  "inStock": "In Stock",
+  "outOfStock": "Out Of Stock",
+  "addToCart": "Add To Cart",
+  "loginRequired": "Login Required",
+  "pleaseLoginToViewProducts": "Please login first to view products and continue shopping."
 }
