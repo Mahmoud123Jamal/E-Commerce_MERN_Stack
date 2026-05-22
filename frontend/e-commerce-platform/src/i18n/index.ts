@@ -1,35 +1,39 @@
 import i18n from "i18next";
-
 import { initReactI18next } from "react-i18next";
-
-import LanguageDetector from "i18next-browser-languagedetector";
 
 import ar from "./locales/ar.json";
 import en from "./locales/en.json";
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    resources: {
-      ar: {
-        translation: ar,
-      },
+const getRawLang = (): "ar" | "en" => {
+  try {
+    const raw = localStorage.getItem("persist:root");
+    if (!raw) return "ar";
+    const parsed = JSON.parse(raw);
+    const lang = JSON.parse(parsed.lang).lang;
+    return lang === "en" ? "en" : "ar";
+  } catch {
+    return "ar";
+  }
+};
 
-      en: {
-        translation: en,
-      },
-    },
+const savedLang = getRawLang();
 
-    lng: "ar",
+i18n.use(initReactI18next).init({
+  resources: {
+    ar: { translation: ar },
+    en: { translation: en },
+  },
 
-    fallbackLng: "ar",
+  lng: savedLang,
 
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+  fallbackLng: "ar",
 
-document.documentElement.dir = "rtl";
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr";
+document.documentElement.lang = savedLang;
 
 export default i18n;
