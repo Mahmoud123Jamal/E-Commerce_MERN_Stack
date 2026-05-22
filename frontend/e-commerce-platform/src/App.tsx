@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import { ToastContainer } from "react-toastify";
 import { useAppSelector } from "./hooks/reduxHooks";
 import { selectTheme } from "./features/theme/themeSelectors";
+import ProductsPage from "./pages/ProductsPage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
+      { path: "/products", element: <ProductsPage /> },
     ],
   },
 ]);
