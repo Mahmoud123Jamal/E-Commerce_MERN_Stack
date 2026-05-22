@@ -31,6 +31,10 @@ const RootLayout = () => {
       to: "/",
       label: t("home"),
     },
+    {
+      to: "/products",
+      label: t("products"),
+    },
   ];
 
   return (
@@ -258,7 +262,7 @@ const RootLayout = () => {
       </header>
 
       {/* Pages */}
-      <main className="flex-1 container mx-auto w-full p-4">
+      <main className="flex-1 container mx-auto w-full p-2">
         <Outlet />
       </main>
 
