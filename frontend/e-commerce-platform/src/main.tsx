@@ -8,7 +8,7 @@ import "./index.css";
 import { Provider } from "react-redux";
 
 import { store, persistor } from "./app/store";
-
+import "./i18n";
 import { PersistGate } from "redux-persist/integration/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
