@@ -49,5 +49,24 @@
   "outOfStock": "Out Of Stock",
   "addToCart": "Add To Cart",
   "loginRequired": "Login Required",
-  "pleaseLoginToViewProducts": "Please login first to view products and continue shopping."
+  "pleaseLoginToViewProducts": "Please login first to view products and continue shopping.",
+  "heroTitle": "Hello Everyone",
+  "heroDescription": "Discover amazing products with modern shopping experience and explore the latest collections with fast delivery.",
+  "shopNow": "Get Started",
+  "topRatedProducts": "Top Rated Products",
+  "topRatedProductsDesc": "Explore the highest rated products loved by our customers.",
+  "banners": {
+    "banner1": {
+      "title": "Beauty & Skincare",
+      "description": "Top beauty and skincare products for your daily routine."
+    },
+    "banner2": {
+      "title": "New iPhone 17",
+      "description": "Discover Apple’s latest technology with premium design and powerful performance."
+    },
+    "banner3": {
+      "title": "Gaming & Accessories",
+      "description": "Gaming keyboards, headsets, PlayStation controllers and pro mice."
+    }
+  }
 }
