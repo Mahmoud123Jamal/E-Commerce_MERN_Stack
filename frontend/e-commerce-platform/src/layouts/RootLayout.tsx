@@ -12,6 +12,7 @@ import { selectIsAuth } from "../features/auth/authSelectors";
 
 import ThemeToggle from "../components/ThemeToggle";
 import LangToggle from "../components/LangToggle";
+import { selectLang } from "../features/lang/langSelectors";
 
 const RootLayout = () => {
   const [open, setOpen] = useState(false);
@@ -21,20 +22,15 @@ const RootLayout = () => {
   const isAuth = useAppSelector(selectIsAuth);
 
   const { t } = useTranslation();
+  useAppSelector(selectLang);
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
   const navItems = [
-    {
-      to: "/",
-      label: t("home"),
-    },
-    {
-      to: "/products",
-      label: t("products"),
-    },
+    { to: "/", label: t("home") },
+    { to: "/products", label: t("products") },
   ];
 
   return (
@@ -49,7 +45,6 @@ const RootLayout = () => {
         duration-300
       "
     >
-      {/* Header */}
       <header
         className="
           bg-base-100
@@ -69,7 +64,6 @@ const RootLayout = () => {
             justify-between
           "
         >
-          {/* Logo + Theme */}
           <div className="flex items-center gap-4">
             <Link
               to="/"
@@ -90,7 +84,6 @@ const RootLayout = () => {
             <LangToggle />
           </div>
 
-          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <NavLink
@@ -98,18 +91,8 @@ const RootLayout = () => {
                 to={item.to}
                 className={({ isActive }) =>
                   isActive
-                    ? `
-                      text-primary
-                      font-semibold
-                      border-b-2
-                      border-primary
-                      pb-1
-                    `
-                    : `
-                      text-base-content
-                      hover:text-primary
-                      transition
-                    `
+                    ? "text-primary font-semibold border-b-2 border-primary pb-1"
+                    : "text-base-content hover:text-primary transition"
                 }
               >
                 {item.label}
@@ -117,14 +100,7 @@ const RootLayout = () => {
             ))}
 
             {isAuth ? (
-              <button
-                onClick={handleLogout}
-                className="
-                  btn
-                  btn-primary
-                  btn-sm
-                "
-              >
+              <button onClick={handleLogout} className="btn btn-primary btn-sm">
                 {t("logout")}
               </button>
             ) : (
@@ -133,18 +109,8 @@ const RootLayout = () => {
                   to="/login"
                   className={({ isActive }) =>
                     isActive
-                      ? `
-                        text-primary
-                        font-semibold
-                        border-b-2
-                        border-primary
-                        pb-1
-                      `
-                      : `
-                        text-base-content
-                        hover:text-primary
-                        transition
-                      `
+                      ? "text-primary font-semibold border-b-2 border-primary pb-1"
+                      : "text-base-content hover:text-primary transition"
                   }
                 >
                   {t("login")}
@@ -154,18 +120,8 @@ const RootLayout = () => {
                   to="/register"
                   className={({ isActive }) =>
                     isActive
-                      ? `
-                        text-primary
-                        font-semibold
-                        border-b-2
-                        border-primary
-                        pb-1
-                      `
-                      : `
-                        text-base-content
-                        hover:text-primary
-                        transition
-                      `
+                      ? "text-primary font-semibold border-b-2 border-primary pb-1"
+                      : "text-base-content hover:text-primary transition"
                   }
                 >
                   {t("register")}
@@ -174,19 +130,14 @@ const RootLayout = () => {
             )}
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setOpen(!open)}
-            className="
-              md:hidden
-              text-base-content
-            "
+            className="md:hidden text-base-content"
           >
             {open ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
-        {/* Mobile Nav */}
         {open && (
           <nav
             className="
@@ -222,11 +173,7 @@ const RootLayout = () => {
                   handleLogout();
                   setOpen(false);
                 }}
-                className="
-                  btn
-                  btn-primary
-                  btn-sm
-                "
+                className="btn btn-primary btn-sm"
               >
                 {t("logout")}
               </button>
@@ -235,11 +182,7 @@ const RootLayout = () => {
                 <NavLink
                   to="/login"
                   onClick={() => setOpen(false)}
-                  className="
-                    text-base-content
-                    hover:text-primary
-                    transition
-                  "
+                  className="text-base-content hover:text-primary transition"
                 >
                   {t("login")}
                 </NavLink>
@@ -247,11 +190,7 @@ const RootLayout = () => {
                 <NavLink
                   to="/register"
                   onClick={() => setOpen(false)}
-                  className="
-                    text-base-content
-                    hover:text-primary
-                    transition
-                  "
+                  className="text-base-content hover:text-primary transition"
                 >
                   {t("register")}
                 </NavLink>
@@ -261,12 +200,10 @@ const RootLayout = () => {
         )}
       </header>
 
-      {/* Pages */}
       <main className="flex-1 container mx-auto w-full p-2">
         <Outlet />
       </main>
 
-      {/* Footer */}
       <footer
         className="
           bg-base-100
