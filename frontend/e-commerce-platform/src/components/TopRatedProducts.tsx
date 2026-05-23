@@ -8,6 +8,7 @@ import { itemVariants } from "../animations/products/productsPageVariants";
 
 import { useProducts } from "../hooks/ProductsHook";
 import type { Products } from "../types/productType";
+import Loading from "./Loading";
 
 function TopRatedProducts() {
   const { t } = useTranslation();
@@ -25,11 +26,7 @@ function TopRatedProducts() {
     .slice(0, 4);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center py-20">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
