@@ -24,9 +24,10 @@ import {
   topVariants,
 } from "../animations/products/productsPageVariants";
 import type { Products } from "../types/productType";
+import Loading from "../components/Loading";
 
 const ProductsPage = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search);
@@ -34,8 +35,6 @@ const ProductsPage = () => {
   const [category, setCategory] = useState("All");
 
   const [page, setPage] = useState(1);
-
-  const isArabic = i18n.language === "ar";
 
   const isAuth = useAppSelector(selectIsAuth);
 
@@ -122,7 +121,6 @@ const ProductsPage = () => {
         px-4
         py-10
       "
-      dir={isArabic ? "rtl" : "ltr"}
     >
       {/* SEARCH + FILTER */}
       <motion.div
@@ -218,9 +216,7 @@ const ProductsPage = () => {
 
       {/* LOADING */}
       {isLoading ? (
-        <div className="flex justify-center py-20">
-          <span className="loading loading-spinner loading-lg text-primary"></span>
-        </div>
+        <Loading />
       ) : products.length === 0 ? (
         <motion.div variants={itemVariants} className="text-center py-20">
           <h2
