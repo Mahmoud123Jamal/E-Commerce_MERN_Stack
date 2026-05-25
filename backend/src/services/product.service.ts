@@ -1,9 +1,15 @@
 import ProductModel from "../models/product.model";
 import { GetProductsParams } from "../types/ProductsParamsType";
 import { UserType } from "../types/User.model.type";
+import { FilterQuery } from "mongoose";
+import {
+  IProductInput,
+  IProductUpdateInput,
+  IComment,
+} from "../types/product.model.type";
 
 export const createProductService = async (
-  data: any,
+  data: IProductInput,
   files: Express.Multer.File[],
 ) => {
   const product = await ProductModel.create({
@@ -14,7 +20,7 @@ export const createProductService = async (
     category: data.category,
 
     imageUrl: files?.length ? `/uploads/products/${files[0].filename}` : "",
-    multipleImages: files?.map((f) => `/uploads/products/${f.filename}`),
+    multipleImages: files?.map((f) => `/uploads/products/${f.filename}`) || [],
 
     comments: [],
     averageRating: 0,
@@ -26,24 +32,21 @@ export const createProductService = async (
 
 export const getAllProductsService = async ({
   page = 1,
-
   limit = 8,
-
   search = "",
-
   category = "",
 }: GetProductsParams) => {
   const skip = (page - 1) * limit;
 
-  const filter: any = {};
+  // Explicitly type the Mongoose query filter object instead of using 'any'
+  const filter: FilterQuery<typeof ProductModel> = {};
 
-  // SEARCH
+  // SEARCH: Query both English and Arabic fields safely
   if (search) {
-    filter.name = {
-      $regex: search,
-
-      $options: "i",
-    };
+    filter.$or = [
+      { "name.en": { $regex: search, $options: "i" } },
+      { "name.ar": { $regex: search, $options: "i" } },
+    ];
   }
 
   // CATEGORY
@@ -60,11 +63,8 @@ export const getAllProductsService = async ({
 
   return {
     products,
-
     totalProducts,
-
     totalPages: Math.ceil(totalProducts / limit),
-
     currentPage: page,
   };
 };
@@ -75,17 +75,28 @@ export const getProductByIdService = async (id: string) => {
 
 export const updateProductService = async (
   id: string,
-  data: any,
+  data: IProductUpdateInput,
   files?: Express.Multer.File[],
 ) => {
   const product = await ProductModel.findById(id);
-
   if (!product) return null;
 
-  if (data.name) product.name = data.name;
-  if (data.description) product.description = data.description;
-  if (data.price) product.price = Number(data.price);
-  if (data.stock) product.stock = Number(data.stock);
+  // Handle nested object mutations safely via explicit type checking
+  if (data.name) {
+    product.name = {
+      en: data.name.en ?? product.name.en,
+      ar: data.name.ar ?? product.name.ar,
+    };
+  }
+  if (data.description) {
+    product.description = {
+      en: data.description.en ?? product.description.en,
+      ar: data.description.ar ?? product.description.ar,
+    };
+  }
+
+  if (data.price !== undefined) product.price = Number(data.price);
+  if (data.stock !== undefined) product.stock = Number(data.stock);
   if (data.category) product.category = data.category;
 
   if (files?.length) {
@@ -110,11 +121,11 @@ export const addCommentService = async (
   rating: number,
 ) => {
   const product = await ProductModel.findById(productId);
-
   if (!product) return null;
-  // Anti Spam Review
+
+  // Anti Spam Review check
   const alreadyReviewed = product.comments.find(
-    (item) => item.user.toString() === user._id.toString(),
+    (item: IComment) => item.user.toString() === user._id.toString(),
   );
 
   if (alreadyReviewed) {
@@ -129,23 +140,24 @@ export const addCommentService = async (
     createdAt: new Date(),
   });
 
-  const total = product.comments.reduce((sum, c) => sum + c.rating, 0);
+  const total = product.comments.reduce(
+    (sum: number, c: IComment) => sum + c.rating,
+    0,
+  );
 
   product.reviewsCount = product.comments.length;
   product.averageRating = total / product.comments.length;
 
   await product.save();
-
   return product;
 };
 
 export const getCommentsService = async (productId: string) => {
   const product = await ProductModel.findById(productId);
-
   if (!product) return null;
 
   const comments = [...product.comments].sort(
-    (a: any, b: any) =>
+    (a: IComment, b: IComment) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 
