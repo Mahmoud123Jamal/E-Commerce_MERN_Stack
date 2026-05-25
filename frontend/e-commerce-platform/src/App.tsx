@@ -1,42 +1,37 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RootLayout from "./layouts/RootLayout";
-import ErrorPage from "./pages/ErrorPage";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import { ToastContainer } from "react-toastify";
-import { useAppSelector } from "./hooks/reduxHooks";
-import { selectTheme } from "./features/theme/themeSelectors";
-import ProductsPage from "./pages/ProductsPage";
+import { Suspense } from "react";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <RootLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      { path: "/", element: <Home /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
-      { path: "/products", element: <ProductsPage /> },
-    ],
-  },
-]);
+import { RouterProvider } from "react-router-dom";
+
+import { ToastContainer } from "react-toastify";
+
+import { router } from "./routes/AppRouter";
+
+import { useAppSelector } from "./hooks/reduxHooks";
+
+import { selectTheme } from "./features/theme/themeSelectors";
+
+import Loading from "./components/Loading";
+
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   const theme = useAppSelector(selectTheme);
+
   return (
-    <div data-theme={theme}>
-      <RouterProvider router={router} />
+    <div data-theme={theme} className="min-h-screen">
+      <Suspense fallback={<Loading />}>
+        <RouterProvider router={router} />
+      </Suspense>
+
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={2500}
         hideProgressBar={false}
-        newestOnTop={false}
+        newestOnTop
         closeOnClick
-        rtl={true}
-        pauseOnFocusLoss
-        draggable
         pauseOnHover
+        draggable
+        pauseOnFocusLoss
         theme="colored"
       />
     </div>
