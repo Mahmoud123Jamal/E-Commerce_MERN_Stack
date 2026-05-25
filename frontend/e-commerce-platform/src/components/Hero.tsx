@@ -7,13 +7,6 @@ import heroSection from "../assets/heroSection.jpg";
 const HeroSection = () => {
   const { t } = useTranslation();
 
-  const handleScrollTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   return (
     <section
       className="
@@ -81,7 +74,6 @@ const HeroSection = () => {
 
           <Link
             to="/products"
-            onClick={handleScrollTop}
             className="
               btn
               btn-primary
