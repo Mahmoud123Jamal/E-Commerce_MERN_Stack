@@ -13,6 +13,7 @@ import { selectIsAuth } from "../features/auth/authSelectors";
 import ThemeToggle from "../components/ThemeToggle";
 import LangToggle from "../components/LangToggle";
 import { selectLang } from "../features/lang/langSelectors";
+import ScrollToTop from "../components/ScrollToTop";
 
 const RootLayout = () => {
   const [open, setOpen] = useState(false);
@@ -201,7 +202,10 @@ const RootLayout = () => {
       </header>
 
       <main className="flex-1 container mx-auto w-full p-2">
-        <Outlet />
+        <>
+          <ScrollToTop />
+          <Outlet />
+        </>
       </main>
 
       <footer
