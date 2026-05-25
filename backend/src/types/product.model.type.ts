@@ -21,9 +21,13 @@ export interface IComment {
   createdAt: Date;
 }
 
+export interface ILocalizedField {
+  en: string;
+  ar: string;
+}
 export interface IProduct extends Document {
-  name: string;
-  description: string;
+  name: ILocalizedField;
+  description: ILocalizedField;
   price: number;
   stock: number;
   category: CategoryType;
@@ -35,3 +39,25 @@ export interface IProduct extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type IProductInput = Omit<
+  IProduct,
+  | keyof import("mongoose").Document
+  | "imageUrl"
+  | "multipleImages"
+  | "comments"
+  | "averageRating"
+  | "reviewsCount"
+  | "createdAt"
+  | "updatedAt"
+> & {
+  price: string | number;
+  stock: string | number;
+};
+
+export type IProductUpdateInput = Partial<
+  Omit<IProductInput, "name" | "description">
+> & {
+  name?: Partial<IProduct["name"]>;
+  description?: Partial<IProduct["description"]>;
+};
