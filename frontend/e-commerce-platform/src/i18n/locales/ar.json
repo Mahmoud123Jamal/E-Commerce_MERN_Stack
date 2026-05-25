@@ -4,26 +4,19 @@
   "login": "تسجيل الدخول",
   "register": "تسجيل حساب",
   "logout": "تسجيل الخروج",
-
   "header-title-register": "تسجيل حساب جديد",
   "header-title-login": "تسجيل الدخول",
-
   "name": "الاسم",
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",
-
   "namePlaceholder": "اكتب اسمك",
   "emailPlaceholder": "example@gmail.com",
   "passwordPlaceholder": "********",
-
   "submitLoading": "جاري الإرسال",
-
   "loginSuccess": "تم تسجيل الدخول بنجاح ",
   "loginError": "حدث خطأ أثناء تسجيل الدخول ",
-
   "registerSuccess": "تم إنشاء الحساب بنجاح ",
   "registerError": "حدث خطأ أثناء إنشاء الحساب ",
-
   "validation": {
     "email": "البريد الإلكتروني غير صحيح",
     "passwordMin": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
@@ -34,7 +27,6 @@
   "searchProducts": "ابحث عن المنتجات...",
   "all": "الكل",
   "noProductsFound": "لا توجد منتجات",
-
   "Electronics": "إلكترونيات",
   "Fashion": "أزياء",
   "Home & Kitchen": "المنزل والمطبخ",
@@ -67,5 +59,17 @@
       "title": "أجهزة الألعاب والإكسسوارات",
       "description": "لوحة مفاتيح، سماعات، دراع بلايستيشن وفأرة احترافية بأفضل الأسعار."
     }
-  }
+  },
+  "yourRating": "تقييمك",
+  "writeReview": "اكتب تعليقك هنا...",
+  "addComment": "إضافة تعليق",
+  "back": "رجوع",
+  "itemsLeft": "قطعة متبقية",
+  "loading": "جاري التحميل...",
+  "productNotFound": "المنتج غير موجود",
+  "noReviews": "لا يوجد تعليقات بعد",
+  "reviews": "التقييمات",
+  "description": "الوصف",
+  "price": "السعر",
+  "alreadyCommented": "لقد قمت بإضافة تقييم لهذا المنتج بالفعل."
 }

@@ -4,26 +4,19 @@
   "login": "Login",
   "register": "Register",
   "logout": "Logout",
-
   "header-title-register": "Create New Account",
   "header-title-login": "Login to Your Account",
-
   "name": "Name",
   "email": "Email",
   "password": "Password",
-
   "namePlaceholder": "Enter your name",
   "emailPlaceholder": "example@gmail.com",
   "passwordPlaceholder": "********",
-
   "submitLoading": "Loading...",
-
   "loginSuccess": "Login successful",
   "loginError": "Login failed ",
-
   "registerSuccess": "Account created successfully",
   "registerError": "Registration failed ",
-
   "validation": {
     "email": "Invalid email address",
     "passwordMin": "Password must be at least 8 characters",
@@ -31,11 +24,9 @@
     "nameMin": "Name must be at least 3 characters"
   },
   "products": "Explore Products",
-
   "searchProducts": "Search products...",
   "all": "All",
   "noProductsFound": "No Products Found",
-
   "Electronics": "Electronics",
   "Fashion": "Fashion",
   "Home & Kitchen": "Home & Kitchen",
@@ -68,5 +59,17 @@
       "title": "Gaming & Accessories",
       "description": "Gaming keyboards, headsets, PlayStation controllers and pro mice."
     }
-  }
+  },
+  "yourRating": "Your Rating",
+  "writeReview": "Write your review here...",
+  "addComment": "Add Comment",
+  "back": "Back",
+  "itemsLeft": "items left",
+  "loading": "Loading...",
+  "productNotFound": "Product not found",
+  "noReviews": "No reviews yet",
+  "reviews": "Reviews",
+  "description": "Description",
+  "price": "Price",
+  "alreadyCommented": "You have already left a review for this product."
 }
