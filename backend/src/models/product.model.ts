@@ -37,15 +37,14 @@ const commentSchema = new Schema<IComment>(
 const productSchema = new Schema<IProduct>(
   {
     name: {
-      type: String,
-      required: true,
+      en: { type: String, required: true },
+      ar: { type: String, required: true },
     },
 
     description: {
-      type: String,
-      required: true,
+      en: { type: String, required: true },
+      ar: { type: String, required: true },
     },
-
     price: {
       type: Number,
       required: true,
