@@ -2,17 +2,29 @@ import { body } from "express-validator";
 import { PRODUCT_CATEGORIES } from "../types/product.model.type";
 
 export const createProductValidator = [
-  body("name")
+  body("name.en")
     .notEmpty()
-    .withMessage("Name is required")
+    .withMessage("English name is required")
     .isLength({ min: 3 })
-    .withMessage("Name must be at least 3 chars"),
+    .withMessage("English name must be at least 3 chars"),
 
-  body("description")
+  body("name.ar")
     .notEmpty()
-    .withMessage("Description is required")
+    .withMessage("Arabic name is required")
+    .isLength({ min: 3 })
+    .withMessage("Arabic name must be at least 3 chars"),
+
+  body("description.en")
+    .notEmpty()
+    .withMessage("English description is required")
     .isLength({ min: 10 })
-    .withMessage("Description too short"),
+    .withMessage("English description must be at least 10 chars"),
+
+  body("description.ar")
+    .notEmpty()
+    .withMessage("Arabic description is required")
+    .isLength({ min: 10 })
+    .withMessage("Arabic description must be at least 10 chars"),
 
   body("price")
     .notEmpty()
@@ -34,12 +46,25 @@ export const createProductValidator = [
 ];
 
 export const updateProductValidator = [
-  body("name").optional().isLength({ min: 3 }).withMessage("Name too short"),
+  body("name.en")
+    .optional()
+    .isLength({ min: 3 })
+    .withMessage("English name too short"),
 
-  body("description")
+  body("name.ar")
+    .optional()
+    .isLength({ min: 3 })
+    .withMessage("Arabic name too short"),
+
+  body("description.en")
     .optional()
     .isLength({ min: 10 })
-    .withMessage("Description too short"),
+    .withMessage("English description too short"),
+
+  body("description.ar")
+    .optional()
+    .isLength({ min: 10 })
+    .withMessage("Arabic description too short"),
 
   body("price").optional().isNumeric().withMessage("Price must be number"),
 
