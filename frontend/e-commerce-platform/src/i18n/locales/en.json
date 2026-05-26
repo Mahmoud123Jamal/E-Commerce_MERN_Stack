@@ -71,5 +71,23 @@
   "reviews": "Reviews",
   "description": "Description",
   "price": "Price",
-  "alreadyCommented": "You have already left a review for this product."
+  "alreadyCommented": "You have already left a review for this product.",
+  "productToasts": {
+    "productCreated": "Product created successfully",
+    "createFailed": "Failed to create product",
+    "productUpdated": "Product updated successfully",
+    "productDeleted": "Product deleted successfully",
+    "commentAdded": "Comment added successfully",
+    "commentFailed": "Failed to add comment"
+  },
+  "errorBoundary": {
+    "title": "Oops!",
+    "message": "Something went wrong. Please try refreshing the page.",
+    "button": "Try Again"
+  },
+  "error500": {
+    "title": "Server Error",
+    "message": "Sorry, an unexpected error occurred. Please try again later.",
+    "backHome": "Back to Home"
+  }
 }

@@ -71,5 +71,23 @@
   "reviews": "التقييمات",
   "description": "الوصف",
   "price": "السعر",
-  "alreadyCommented": "لقد قمت بإضافة تقييم لهذا المنتج بالفعل."
+  "alreadyCommented": "لقد قمت بإضافة تقييم لهذا المنتج بالفعل.",
+  "productToasts": {
+    "productCreated": "تم إنشاء المنتج بنجاح",
+    "createFailed": "فشل إنشاء المنتج",
+    "productUpdated": "تم تحديث المنتج بنجاح",
+    "productDeleted": "تم حذف المنتج بنجاح",
+    "commentAdded": "تم إضافة التعليق بنجاح",
+    "commentFailed": "فشل إضافة التعليق"
+  },
+  "errorBoundary": {
+    "title": "Oops!",
+    "message": "Something went wrong. Please try refreshing the page.",
+    "button": "Try Again"
+  },
+  "error500": {
+    "title": "حدث خطأ في السيرفر",
+    "message": "عذرًا، حدث خطأ غير متوقع. حاول مرة أخرى لاحقًا.",
+    "backHome": "العودة للرئيسية"
+  }
 }
