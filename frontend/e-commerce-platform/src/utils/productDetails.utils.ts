@@ -33,15 +33,15 @@ const STATIC_IMAGES = [
 export const buildProductImages = (product: Products) => {
   if (product.multipleImages && product.multipleImages.length > 0) {
     return product.multipleImages.map((img: string) => ({
-      image: `${BASE_URL}/${img}`,
+      image: img.startsWith("http") ? img : `${BASE_URL}/${img}`,
       title: product.name,
       description: product.description,
     }));
   }
 
-  return STATIC_IMAGES.map((url, i) => ({
+  return STATIC_IMAGES.map((url) => ({
     image: url,
-    title: `${product.name} - Slide ${i + 1}`,
+    title: product.name,
     description: product.description,
   }));
 };
