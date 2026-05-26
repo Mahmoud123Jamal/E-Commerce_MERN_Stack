@@ -12,10 +12,16 @@ import {
   productCardVariants,
   productImageVariants,
 } from "../animations/products/productCardVariants";
+import { useCurrentLanguage, useIsArabic } from "../hooks/CurrentLanguage";
+import { toArabicNums } from "../utils/numberConverter";
 
 const ProductCard = ({ product }: { product: Products }) => {
   const { t } = useTranslation();
+  const currentLanguage = useCurrentLanguage();
+  const isArabic = useIsArabic();
 
+  const formatNum = (num: string | number) =>
+    isArabic ? toArabicNums(num) : num;
   return (
     <Link to={`/products/${product._id}`}>
       <motion.div
@@ -50,7 +56,7 @@ const ProductCard = ({ product }: { product: Products }) => {
             initial="initial"
             whileHover="hover"
             src={`https://9to5mac.com/wp-content/uploads/sites/6/2023/09/iphone-15-pro-max-back.jpg`}
-            alt={product.name}
+            alt={product.name[currentLanguage]}
             className="
               w-full
               h-full
@@ -64,14 +70,18 @@ const ProductCard = ({ product }: { product: Products }) => {
             {t(product.category)}
           </div>
 
-          <h2 className="card-title line-clamp-1">{product.name}</h2>
+          <h2 className="card-title line-clamp-1">
+            {product.name[currentLanguage]}
+          </h2>
 
           <p className="text-sm text-base-content/70 line-clamp-2">
-            {product.description}
+            {product.description[currentLanguage]}
           </p>
 
           <div className="text-2xl font-bold text-primary">
-            ${product.price}
+            {isArabic
+              ? `${toArabicNums(product.price)} $`
+              : `$${formatNum(product.price)}`}
           </div>
 
           <div className="flex items-center justify-between">
@@ -79,12 +89,16 @@ const ProductCard = ({ product }: { product: Products }) => {
               <Star className="text-warning" size={15} />
 
               <span className="font-semibold">
-                {product.averageRating?.toFixed(1) || 0}
+                {formatNum(product.averageRating?.toFixed(1) || 0)}
               </span>
             </div>
 
             <span className="text-sm text-base-content/60">
-              ({product.reviewsCount} reviews)
+              ({" "}
+              {isArabic
+                ? `${toArabicNums(product.reviewsCount)} `
+                : `${formatNum(product.reviewsCount)} `}
+              {t("reviews")})
             </span>
           </div>
 
