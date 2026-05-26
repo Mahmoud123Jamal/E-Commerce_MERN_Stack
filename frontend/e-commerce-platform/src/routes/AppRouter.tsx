@@ -5,6 +5,7 @@ import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 
 import ErrorPage from "../pages/ErrorPage";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const Home = lazy(() => import("../pages/Home"));
 
@@ -46,13 +47,21 @@ export const router = createBrowserRouter([
       {
         path: "products",
 
-        element: <ProductsPage />,
+        element: (
+          <ProtectedRoute>
+            <ProductsPage />
+          </ProtectedRoute>
+        ),
       },
 
       {
         path: "products/:id",
 
-        element: <ProductDetailsPage />,
+        element: (
+          <ProtectedRoute>
+            <ProductDetailsPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
