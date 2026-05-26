@@ -12,13 +12,16 @@ export interface Comments {
 
   createdAt: string;
 }
-
+export type LocalizedField = {
+  en: string;
+  ar: string;
+};
 export interface Products {
   _id: string;
 
-  name: string;
+  name: LocalizedField;
 
-  description: string;
+  description: LocalizedField;
 
   price: number;
 
