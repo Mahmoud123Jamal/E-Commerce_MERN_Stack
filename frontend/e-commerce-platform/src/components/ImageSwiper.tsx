@@ -1,25 +1,32 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import type { LocalizedField } from "../types/productType";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { useCurrentLanguage } from "../hooks/CurrentLanguage";
 
-export function ImageSwiper({
-  images,
-}: {
-  images: {
-    image: string;
-    title: string;
-    description: string;
-  }[];
-}) {
+interface LocalizedImageSlide {
+  image: string;
+  title: string | LocalizedField;
+  description: string | LocalizedField;
+}
+
+export function ImageSwiper({ images }: { images: LocalizedImageSlide[] }) {
+  const currentLang = useCurrentLanguage();
+
   if (!images || images.length === 0) {
     return (
       <div className="text-center py-4 text-gray-500">No images available</div>
     );
   }
+
+  const renderText = (field: string | LocalizedField): string => {
+    if (typeof field === "string") return field;
+    return field ? field[currentLang] : "";
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-gray-900">
@@ -40,7 +47,7 @@ export function ImageSwiper({
 
             <img
               src={item.image}
-              alt={item.title}
+              alt={renderText(item.title)}
               loading="lazy"
               className="w-full h-full object-cover select-none"
             />
@@ -49,11 +56,11 @@ export function ImageSwiper({
 
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 transition-all">
               <h2 className="text-3xl md:text-6xl font-bold mb-4 text-white tracking-wide drop-shadow-md">
-                {item.title}
+                {renderText(item.title)}
               </h2>
 
               <p className="max-w-2xl text-sm md:text-xl text-gray-200 drop-shadow-sm leading-relaxed">
-                {item.description}
+                {renderText(item.description)}
               </p>
             </div>
           </SwiperSlide>
