@@ -7,13 +7,13 @@ const Pagination = ({
 
   totalPages: number;
 
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: (page: number) => void;
 }) => {
   return (
     <div className="flex justify-center gap-3 mt-10">
       <button
         disabled={page === 1}
-        onClick={() => setPage((prev) => prev - 1)}
+        onClick={() => setPage(page - 1)}
         className="btn"
       >
         Prev
@@ -23,7 +23,7 @@ const Pagination = ({
 
       <button
         disabled={page >= totalPages}
-        onClick={() => setPage((prev) => prev + 1)}
+        onClick={() => setPage(page + 1)}
         className="btn"
       >
         Next
