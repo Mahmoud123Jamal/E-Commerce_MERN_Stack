@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { toast } from "react-toastify";
-
+import { useTranslation } from "react-i18next";
 import {
   addCommentService,
   createProductService,
@@ -19,21 +18,17 @@ export const useProducts = ({
   page,
 }: {
   search: string;
-
   category: string;
-
   page: number;
 }) => {
   return useQuery({
     queryKey: ["products", search, category, page],
-
     queryFn: () =>
       getProductsService({
         search,
         category,
         page,
       }),
-
     placeholderData: (previousData) => previousData,
   });
 };
@@ -41,42 +36,37 @@ export const useProducts = ({
 export const useSingleProduct = (id: string) => {
   return useQuery({
     queryKey: ["product", id],
-
     queryFn: () => getSingleProductService(id),
-
     enabled: !!id,
   });
 };
 
 export const useCreateProduct = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   return useMutation({
     mutationFn: createProductService,
-
     onSuccess: () => {
-      toast.success("Product created");
-
+      toast.success(t("productToasts.productCreated"));
       queryClient.invalidateQueries({
         queryKey: ["products"],
       });
     },
-
     onError: () => {
-      toast.error("Create failed");
+      toast.error(t("productToasts.createFailed"));
     },
   });
 };
 
 export const useUpdateProduct = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   return useMutation({
     mutationFn: updateProductService,
-
     onSuccess: () => {
-      toast.success("Product updated");
-
+      toast.success(t("productToasts.productUpdated"));
       queryClient.invalidateQueries({
         queryKey: ["products"],
       });
@@ -86,13 +76,12 @@ export const useUpdateProduct = () => {
 
 export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   return useMutation({
     mutationFn: deleteProductService,
-
     onSuccess: () => {
-      toast.success("Product deleted");
-
+      toast.success(t("productToasts.productDeleted"));
       queryClient.invalidateQueries({
         queryKey: ["products"],
       });
@@ -103,10 +92,10 @@ export const useDeleteProduct = () => {
 export const useAddComment = () => {
   const queryClient = useQueryClient();
   const currentUser = useAppSelector(selectUser);
+  const { t } = useTranslation();
 
   return useMutation({
     mutationFn: addCommentService,
-
     onMutate: async (newComment) => {
       await queryClient.cancelQueries({ queryKey: ["products"] });
       await queryClient.cancelQueries({
@@ -175,20 +164,17 @@ export const useAddComment = () => {
 
       return { previousProducts, previousProduct };
     },
-
     onError: (_err, variables, context) => {
-      toast.error("Comment failed");
+      toast.error(t("productToasts.commentFailed"));
       queryClient.setQueryData(["products"], context?.previousProducts);
       queryClient.setQueryData(
         ["product", variables.productId],
         context?.previousProduct,
       );
     },
-
     onSuccess: () => {
-      toast.success("Comment added");
+      toast.success(t("productToasts.commentAdded"));
     },
-
     onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({
