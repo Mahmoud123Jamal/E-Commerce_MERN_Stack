@@ -36,12 +36,13 @@ import {
 } from "../utils/productDetails.utils";
 import type { Comments } from "../types/productType";
 import { toArabicNums } from "../utils/numberConverter";
+import { useCurrentLanguage , useIsArabic } from "../hooks/CurrentLanguage";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
+  const { t } = useTranslation();
+  const isArabic = useIsArabic();
 
   const formatNum = (num: string | number) =>
     isArabic ? toArabicNums(num) : num;
@@ -53,7 +54,7 @@ const ProductDetails = () => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   const [hoveredStar, setHoveredStar] = useState(0);
-
+  const currentLanguage = useCurrentLanguage();
   // Submits the form data to the server mutation handler
   const handleAddComment = () => {
     if (!comment.trim()) return;
@@ -118,7 +119,7 @@ const ProductDetails = () => {
           className="lg:sticky lg:top-8 w-full z-10"
         >
           <div className="rounded-2xl overflow-hidden shadow-lg bg-base-200 border border-base-300">
-            <ImageSwiper images={productImages} />
+            <ImageSwiper key={currentLanguage} images={productImages} />
           </div>
         </motion.div>
 
@@ -148,7 +149,7 @@ const ProductDetails = () => {
 
           {/* Product Identification Headline */}
           <h1 className="text-3xl md:text-4xl font-black text-base-content tracking-tight leading-tight">
-            {product.name}
+            {product.name[currentLanguage]}
           </h1>
 
           {/* Ratings Metric Overview Context */}
@@ -172,7 +173,7 @@ const ProductDetails = () => {
               {t("description")}
             </h3>
             <p className="text-base-content/70 leading-relaxed font-normal text-base">
-              {product.description}
+              {product.description[currentLanguage]}
             </p>
           </div>
 
@@ -262,7 +263,7 @@ const ProductDetails = () => {
                 ))}
               </div>
               <span className="text-xs font-bold text-base-content/40">
-                ({rating} / 5)
+                {isArabic ? `${toArabicNums(rating)} / ٥` : `${rating} / 5`}
               </span>
             </div>
 
