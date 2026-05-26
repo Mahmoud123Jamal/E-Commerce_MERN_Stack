@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ShoppingCart,
@@ -14,7 +13,7 @@ import {
 } from "lucide-react";
 
 import { ImageSwiper } from "../components/ImageSwiper";
-import { useSingleProduct, useAddComment } from "../hooks/ProductsHook";
+import { useSingleProduct } from "../hooks/ProductsHook";
 import { useAppSelector } from "../hooks/reduxHooks";
 import { selectUser } from "../features/auth/authSelectors";
 import Loading from "../components/Loading";
@@ -36,7 +35,8 @@ import {
 } from "../utils/productDetails.utils";
 import type { Comments } from "../types/productType";
 import { toArabicNums } from "../utils/numberConverter";
-import { useCurrentLanguage , useIsArabic } from "../hooks/CurrentLanguage";
+import { useCurrentLanguage, useIsArabic } from "../hooks/CurrentLanguage";
+import { useAddCommentHandler } from "../hooks/useAddCommentHandler";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -48,27 +48,19 @@ const ProductDetails = () => {
     isArabic ? toArabicNums(num) : num;
 
   const { data: product, isLoading } = useSingleProduct(id || "");
-  const { mutate: addComment, isPending } = useAddComment();
   const currentUser = useAppSelector(selectUser);
 
-  const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(5);
-  const [hoveredStar, setHoveredStar] = useState(0);
   const currentLanguage = useCurrentLanguage();
-  // Submits the form data to the server mutation handler
-  const handleAddComment = () => {
-    if (!comment.trim()) return;
-    addComment(
-      { productId: id || "", comment, rating },
-      {
-        onSuccess: () => {
-          setComment("");
-          setRating(5);
-        },
-      },
-    );
-  };
-
+  const {
+    comment,
+    setComment,
+    rating,
+    setRating,
+    hoveredStar,
+    setHoveredStar,
+    isPending,
+    handleAddComment,
+  } = useAddCommentHandler(id);
   if (isLoading) return <Loading />;
 
   if (!product) {
