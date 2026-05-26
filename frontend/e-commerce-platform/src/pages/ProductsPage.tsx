@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 
 import { useTranslation } from "react-i18next";
 
-import { Link } from "react-router-dom";
-
 import ProductCard from "../components/ProductCard";
 
 import Pagination from "../components/Pagination";
@@ -13,18 +11,14 @@ import { useProducts } from "../hooks/ProductsHook";
 
 import { PRODUCT_CATEGORIES } from "../constants/productCategories";
 
-import { useAppSelector } from "../hooks/reduxHooks";
-
-import { selectIsAuth } from "../features/auth/authSelectors";
-
 import {
-  authCardVariants,
   containerVariants,
   itemVariants,
   topVariants,
 } from "../animations/products/productsPageVariants";
 import type { Products } from "../types/productType";
 import Loading from "../components/Loading";
+import { usePaginationScroll } from "../hooks/PaginationScroll";
 
 const ProductsPage = () => {
   const { t } = useTranslation();
@@ -34,9 +28,7 @@ const ProductsPage = () => {
 
   const [category, setCategory] = useState("All");
 
-  const [page, setPage] = useState(1);
-
-  const isAuth = useAppSelector(selectIsAuth);
+  const [page, setPage] = usePaginationScroll(1);
 
   const { data, isLoading } = useProducts({
     search: deferredSearch,
@@ -47,68 +39,6 @@ const ProductsPage = () => {
   const products = data?.data?.products || [];
 
   const totalPages = data?.totalPages || 1;
-
-  if (!isAuth) {
-    return (
-      <div
-        className="
-          flex
-          items-center
-          justify-center
-          min-h-[70vh]
-          px-4
-        "
-      >
-        <motion.div
-          variants={authCardVariants}
-          initial="hidden"
-          animate="visible"
-          className="
-            bg-base-100
-            border
-            border-base-300
-            shadow-xl
-            rounded-2xl
-            p-10
-            text-center
-            max-w-md
-            w-full
-          "
-        >
-          <h2
-            className="
-              text-3xl
-              font-bold
-              text-primary
-              mb-4
-            "
-          >
-            {t("loginRequired")}
-          </h2>
-
-          <p
-            className="
-              text-base-content/70
-              mb-6
-            "
-          >
-            {t("pleaseLoginToViewProducts")}
-          </p>
-
-          <Link
-            to="/login"
-            className="
-              btn
-              btn-primary
-              w-full
-            "
-          >
-            {t("login")}
-          </Link>
-        </motion.div>
-      </div>
-    );
-  }
 
   return (
     <motion.div
