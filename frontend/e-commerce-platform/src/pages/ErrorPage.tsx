@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ErrorPage = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="bg-[#f3f3f3] flex items-center justify-center min-h-screen px-4">
       <div className="w-full max-w-3xl bg-white rounded-3xl shadow-2xl p-8 sm:p-12 text-center border border-gray-200">
@@ -9,11 +12,11 @@ const ErrorPage = () => {
         </h1>
 
         <p className="mb-4 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#131921]">
-          حدث خطأ في السيرفر
+          {t("error500.title")}
         </p>
 
         <p className="mb-8 text-base sm:text-lg text-gray-600">
-          عذرًا، حدث خطأ غير متوقع. حاول مرة أخرى لاحقًا.
+          {t("error500.message")}
         </p>
 
         <Link
@@ -30,7 +33,7 @@ const ErrorPage = () => {
             active:scale-95
           "
         >
-          العودة للرئيسية
+          {t("error500.backHome")}
         </Link>
       </div>
     </section>
