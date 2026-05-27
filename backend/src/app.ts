@@ -1,6 +1,7 @@
 import express from "express";
 import userRoutes from "./routes/user.route";
 import productRoutes from "./routes/product.route";
+import cartRoutes from "./routes/cart.route";
 import cors from "cors";
 import path from "path";
 
@@ -17,4 +18,5 @@ app.use(
 app.use(cors());
 app.use("/api/users/", userRoutes);
 app.use("/api/products/", productRoutes);
+app.use("/api/cart/", cartRoutes);
 export default app;
