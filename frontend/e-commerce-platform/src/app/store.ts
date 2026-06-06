@@ -7,12 +7,12 @@ import storage from "./storage";
 import authReducer from "../features/auth/authSlice";
 import themeReducer from "../features/theme/themeSlice";
 import langReducer from "../features/lang/langSlice";
-import cartReducer from "../features/cart/cartSlice";
+// import cartReducer from "../features/cart/cartSlice";
 const rootReducer = combineReducers({
   auth: authReducer,
   theme: themeReducer,
   lang: langReducer,
-  cart: cartReducer,
+  // cart: cartReducer,
 });
 
 const persistConfig = {
