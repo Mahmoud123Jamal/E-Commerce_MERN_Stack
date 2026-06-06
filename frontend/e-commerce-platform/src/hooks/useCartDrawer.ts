@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useCart } from "./useCart";
+
 let globalIsOpen = false;
 let globalListeners: Array<(value: boolean) => void> = [];
 
@@ -12,6 +13,8 @@ export const useCartDrawer = () => {
 
   useEffect(() => {
     globalListeners.push(setIsOpenState);
+    setIsOpenState(globalIsOpen);
+
     return () => {
       globalListeners = globalListeners.filter((l) => l !== setIsOpenState);
     };
@@ -24,13 +27,23 @@ export const useCartDrawer = () => {
     });
   }, []);
 
-  const toggleDrawer = useCallback(() => setIsOpen(!globalIsOpen), [setIsOpen]);
-  const openDrawer = useCallback(() => setIsOpen(true), [setIsOpen]);
-  const closeDrawer = useCallback(() => setIsOpen(false), [setIsOpen]);
+  const toggleDrawer = useCallback(() => {
+    setIsOpen(!globalIsOpen);
+  }, [setIsOpen]);
+
+  const openDrawer = useCallback(() => {
+    setIsOpen(true);
+  }, [setIsOpen]);
+
+  const closeDrawer = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
+
   const isRtl = useMemo(() => i18n.language === "ar", [i18n.language]);
 
   return {
     ...cartData,
+    isOpen,
     setIsOpen,
     openDrawer,
     closeDrawer,
