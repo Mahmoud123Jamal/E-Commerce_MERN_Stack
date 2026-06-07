@@ -37,6 +37,7 @@ import type { Comments } from "../types/productType";
 import { toArabicNums } from "../utils/numberConverter";
 import { useCurrentLanguage, useIsArabic } from "../hooks/CurrentLanguage";
 import { useAddCommentHandler } from "../hooks/useAddCommentHandler";
+import { useCartDrawer } from "../hooks/useCartDrawer";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -51,6 +52,9 @@ const ProductDetails = () => {
   const currentUser = useAppSelector(selectUser);
 
   const currentLanguage = useCurrentLanguage();
+
+  const { handleAddToCart, isAdding, openDrawer } = useCartDrawer();
+
   const {
     comment,
     setComment,
@@ -61,6 +65,7 @@ const ProductDetails = () => {
     isPending,
     handleAddComment,
   } = useAddCommentHandler(id);
+
   if (isLoading) return <Loading />;
 
   if (!product) {
@@ -74,13 +79,21 @@ const ProductDetails = () => {
     );
   }
 
-  // Pre-rendering payload transformations and validation checks
   const productImages = buildProductImages(product);
   const userAlreadyCommented = hasUserCommented(
     product.comments,
     currentUser?._id,
   );
   const isOutOfStock = product.stock === 0;
+
+  const onAddToCartClick = async () => {
+    try {
+      await handleAddToCart(product._id, 1);
+      openDrawer();
+    } catch (error) {
+      console.error("Failed to add item to cart via React Query:", error);
+    }
+  };
 
   return (
     <motion.section
@@ -89,7 +102,6 @@ const ProductDetails = () => {
       animate="visible"
       className="max-w-7xl mx-auto py-12 px-4 md:px-6 lg:px-8"
     >
-      {/* Navigation Layout - Breadcrumb link */}
       <motion.div variants={detailsItemVariants} className="mb-6">
         <button
           onClick={() => navigate(-1)}
@@ -103,9 +115,7 @@ const ProductDetails = () => {
         </button>
       </motion.div>
 
-      {/* Main Container - Premium Card Frame Grid */}
       <div className="bg-base-100 border border-base-200 shadow-2xl rounded-4xl p-6 md:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start transition-all duration-300 hover:shadow-primary/5">
-        {/* Gallery Section - Left Side Wrapper */}
         <motion.div
           variants={detailsImageVariants}
           className="lg:sticky lg:top-8 w-full z-10"
@@ -115,12 +125,10 @@ const ProductDetails = () => {
           </div>
         </motion.div>
 
-        {/* Product Information - Right Side Content Segment */}
         <motion.div
           variants={detailsItemVariants}
           className="flex flex-col gap-6 w-full"
         >
-          {/* Metadata Badges - Category Tag and Stock Availability Indicators */}
           <div className="flex items-center justify-between flex-wrap gap-4">
             <span className="badge badge-primary badge-outline px-4 py-3.5 text-xs font-bold uppercase tracking-wider">
               {t(product.category)}
@@ -139,12 +147,10 @@ const ProductDetails = () => {
             )}
           </div>
 
-          {/* Product Identification Headline */}
           <h1 className="text-3xl md:text-4xl font-black text-base-content tracking-tight leading-tight">
             {product.name[currentLanguage]}
           </h1>
 
-          {/* Ratings Metric Overview Context */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 bg-warning/10 border border-warning/20 rounded-xl px-3 py-1.5 shadow-sm">
               <Star size={16} className="text-warning fill-warning" />
@@ -159,7 +165,6 @@ const ProductDetails = () => {
 
           <div className="h-px bg-base-200 my-2" />
 
-          {/* Detailed Marketing/Product Description */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-base-content/40 mb-2">
               {t("description")}
@@ -169,7 +174,6 @@ const ProductDetails = () => {
             </p>
           </div>
 
-          {/* Checkout Parameters Panel - Price and Remaining Units */}
           <div className="flex items-end justify-between flex-wrap gap-4 bg-base-200/50 p-4 rounded-2xl border border-base-200">
             <div className="flex flex-col">
               <span className="text-xs font-bold uppercase tracking-wider text-base-content/40 mb-1">
@@ -189,27 +193,29 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          {/* Action Trigger - Cart Submission Interface */}
           <motion.button
+            onClick={onAddToCartClick}
             variants={detailsButtonVariants}
             initial="initial"
-            whileHover="hover"
-            whileTap="tap"
-            disabled={isOutOfStock}
-            className="btn btn-primary btn-lg w-full px-8 gap-3 rounded-2xl font-bold shadow-xl shadow-primary/20 disabled:opacity-40 normal-case"
+            whileHover={isAdding || product.stock === 0 ? "initial" : "hover"}
+            whileTap={isAdding || product.stock === 0 ? "initial" : "tap"}
+            disabled={product.stock === 0 || isAdding}
+            className="btn btn-primary btn-md w-full md:w-fit px-12 gap-3 rounded-2xl shadow-lg shadow-primary/30 disabled:opacity-50"
           >
-            <ShoppingCart size={22} className="stroke-[2.5]" />
-            {t("addToCart")}
+            {isAdding ? (
+              <span className="loading loading-spinner loading-sm" />
+            ) : (
+              <ShoppingCart size={20} />
+            )}
+            {isAdding ? t("adding...", "Adding...") : t("addToCart")}
           </motion.button>
         </motion.div>
       </div>
 
-      {/* Review Management Architecture Section */}
       <motion.div
         variants={detailsItemVariants}
         className="mt-16 max-w-4xl mx-auto"
       >
-        {/* Section Header Segment */}
         <div className="flex items-center gap-3 mb-8 border-b border-base-200 pb-4">
           <MessageSquare size={26} className="text-primary stroke-2" />
           <h2 className="text-2xl font-black tracking-tight">{t("reviews")}</h2>
@@ -218,7 +224,6 @@ const ProductDetails = () => {
           </span>
         </div>
 
-        {/* Comment Entry Form Gate keeping Conditional */}
         {userAlreadyCommented ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -232,7 +237,6 @@ const ProductDetails = () => {
           </motion.div>
         ) : (
           <div className="bg-base-100 border border-base-200 rounded-3xl p-6 md:p-8 mb-8 shadow-md">
-            {/* Rating Stars Form Control Wrapper */}
             <div className="flex items-center gap-3 mb-4 flex-wrap">
               <span className="text-sm font-bold text-base-content/80">
                 {t("yourRating")}:
@@ -259,7 +263,6 @@ const ProductDetails = () => {
               </span>
             </div>
 
-            {/* Comment Body Input Control */}
             <textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
@@ -268,7 +271,6 @@ const ProductDetails = () => {
               className="textarea textarea-bordered w-full bg-base-200/50 text-base-content border-base-300 focus:border-primary focus:bg-base-100 focus:outline-none focus:ring-4 focus:ring-primary/10 rounded-2xl resize-none transition-all duration-200 p-4 mb-4 text-base leading-relaxed"
             />
 
-            {/* Action Trigger - Form Dispatch Action */}
             <div className="flex justify-end">
               <motion.button
                 variants={detailsButtonVariants}
@@ -290,7 +292,6 @@ const ProductDetails = () => {
           </div>
         )}
 
-        {/* Core Review Stream List Map Render */}
         {product.comments.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 gap-3 bg-base-200/40 rounded-3xl border border-base-200 border-dashed text-center">
             <MessageSquare
@@ -309,7 +310,6 @@ const ProductDetails = () => {
                 {...detailsCommentVariants(index)}
                 className="bg-base-100 border border-base-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-base-300 transition-all duration-200 flex flex-col gap-3"
               >
-                {/* Meta-Header - Identity Profile Badge and Stars Context */}
                 <div className="flex items-start justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-base shadow-inner border border-primary/5">
@@ -327,7 +327,6 @@ const ProductDetails = () => {
                     </div>
                   </div>
 
-                  {/* Evaluated Local Rating Star Matrix Display */}
                   <div className="flex items-center gap-1 bg-warning/5 border border-warning/10 rounded-lg px-2 py-1">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
@@ -339,7 +338,6 @@ const ProductDetails = () => {
                   </div>
                 </div>
 
-                {/* Comment Content Display Section */}
                 <p className="text-base-content/80 text-sm leading-relaxed pl-1">
                   {item.comment}
                 </p>
