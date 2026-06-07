@@ -13,6 +13,7 @@ import { selectTheme } from "./features/theme/themeSelectors";
 import Loading from "./components/Loading";
 
 import "react-toastify/dist/ReactToastify.css";
+import { CartDrawer } from "./components/CartDrawer";
 
 function App() {
   const theme = useAppSelector(selectTheme);
@@ -34,6 +35,7 @@ function App() {
         pauseOnFocusLoss
         theme="colored"
       />
+      <CartDrawer />
     </div>
   );
 }
