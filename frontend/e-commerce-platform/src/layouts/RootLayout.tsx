@@ -17,12 +17,16 @@ import { selectIsAuth } from "../features/auth/authSelectors";
 import ThemeToggle from "../components/ThemeToggle";
 import LangToggle from "../components/LangToggle";
 import ScrollToTop from "../components/ScrollToTop";
+import { useCartDrawer } from "../hooks/useCartDrawer"; // 🌟 جلب الـ Hook
 
 const RootLayout = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(selectIsAuth);
   const { t } = useTranslation();
+
+  const { openDrawer, cart } = useCartDrawer();
+  const cartItemsCount = cart?.items?.length || 0;
 
   const handleLogout = () => {
     dispatch(logout());
@@ -112,12 +116,18 @@ const RootLayout = () => {
                   <Heart size={22} />
                 </Link>
 
-                <Link
-                  to="/cart"
-                  className="btn btn-ghost btn-circle btn-sm text-base-content hover:text-primary"
+                <button
+                  onClick={openDrawer}
+                  className="btn btn-ghost btn-circle btn-sm text-base-content hover:text-primary relative"
                 >
                   <ShoppingCart size={22} />
-                </Link>
+
+                  {cartItemsCount > 0 && (
+                    <span className="absolute -top-1 -right-1 badge badge-primary badge-sm text-white">
+                      {cartItemsCount}
+                    </span>
+                  )}
+                </button>
               </>
             )}
 
@@ -220,13 +230,20 @@ const RootLayout = () => {
                       <Heart size={24} />
                     </Link>
 
-                    <Link
-                      to="/cart"
-                      onClick={() => setOpen(false)}
-                      className="btn btn-ghost btn-circle text-base-content"
+                    <button
+                      onClick={() => {
+                        setOpen(false);
+                        openDrawer();
+                      }}
+                      className="btn btn-ghost btn-circle text-base-content relative"
                     >
                       <ShoppingCart size={24} />
-                    </Link>
+                      {cartItemsCount > 0 && (
+                        <span className="absolute top-0 right-0 badge badge-primary badge-xs text-white">
+                          {cartItemsCount}
+                        </span>
+                      )}
+                    </button>
                   </>
                 )}
 
