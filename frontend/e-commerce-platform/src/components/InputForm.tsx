@@ -67,6 +67,7 @@ function InputForm<T extends FormVariant>({
               id="name"
               placeholder={t("namePlaceholder")}
               {...register("name")}
+              autoComplete="username"
               className="
                 px-4
                 py-3
@@ -102,6 +103,7 @@ function InputForm<T extends FormVariant>({
             type="email"
             id="email"
             placeholder={t("emailPlaceholder")}
+            autoComplete="username"
             {...register("email")}
             className="
               px-4
@@ -136,6 +138,7 @@ function InputForm<T extends FormVariant>({
           <input
             type="password"
             id="password"
+            autocomplete="current-password"
             placeholder={t("passwordPlaceholder")}
             {...register("password")}
             className="
@@ -152,6 +155,7 @@ function InputForm<T extends FormVariant>({
               focus:ring-2
               focus:ring-primary
               focus:border-primary
+
             "
           />
 
