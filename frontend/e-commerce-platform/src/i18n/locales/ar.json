@@ -92,5 +92,15 @@
   },
   "theme": "المظهر",
   "language": "اللغة",
-  "account": "الحساب"
+  "account": "الحساب",
+
+  "cartEmpty": "سلتك فارغة",
+  "addProductsToCart": "قم بإضافة المنتجات إلى السلة لبدء التسوق",
+  "continueShopping": "متابعة التسوق",
+  "subtotal": "الإجمالي الفرعي",
+  "shipping": "الشحن",
+  "free": "مجاني",
+  "total": "الإجمالي الكلي",
+  "vatIncluded": "شامل ضريبة القيمة المضافة",
+  "checkout": "الدفع"
 }

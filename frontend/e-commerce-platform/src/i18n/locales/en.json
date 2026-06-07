@@ -92,5 +92,15 @@
   },
   "theme": "Theme",
   "language": "Language",
-  "account": "Account"
+  "account": "Account",
+
+  "cartEmpty": "Your cart is empty",
+  "addProductsToCart": "Add products to your cart to start shopping",
+  "continueShopping": "Continue Shopping",
+  "subtotal": "Subtotal",
+  "shipping": "Shipping",
+  "free": "Free",
+  "total": "Total Price",
+  "vatIncluded": "Includes VAT / Taxes",
+  "checkout": "Checkout"
 }
