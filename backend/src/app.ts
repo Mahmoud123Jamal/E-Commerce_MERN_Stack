@@ -2,6 +2,7 @@ import express from "express";
 import userRoutes from "./routes/user.route";
 import productRoutes from "./routes/product.route";
 import cartRoutes from "./routes/cart.route";
+import wishlistRoute from "./routes/wishlist.route";
 import cors from "cors";
 import path from "path";
 
@@ -19,4 +20,5 @@ app.use(cors());
 app.use("/api/users/", userRoutes);
 app.use("/api/products/", productRoutes);
 app.use("/api/cart/", cartRoutes);
+app.use("/api/wishlist", wishlistRoute);
 export default app;
